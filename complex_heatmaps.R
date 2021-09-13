@@ -23,8 +23,6 @@ au <- as.matrix(replicate(11, 'AU-1'))
 group <- c(au, rt, tb)
 son$Group=group
 
-#loses the rownames for some reason
-#au <- son %>% filter(Group=='AU-1')
 
 #another way
 au <- son[son$Group == 'AU-1', ] 
