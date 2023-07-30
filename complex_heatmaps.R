@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript
+
 library(devtools)
 #install_github("jokergoo/ComplexHeatmap")
 library(ComplexHeatmap)
@@ -10,7 +12,8 @@ library(readxl)
 ########## VD #############
 ############
 son <- read.csv('bbmap_VD_abundance.csv')
-vd <- read_excel("~/Documents/PhD/Sample processing/NGS/read_stats_taxonomy_VD.xlsx", sheet=2)
+vd <- read_excel("~/paht/to/read_stats_taxonomy_VD.xlsx", 
+sheet = 2)
 
 rownames(son) <- son[,1]
 son <- son[,-1]
@@ -54,13 +57,12 @@ rownames(sonm) <- c('NSP1.2', 'NSP2.2', 'NSP3.2', 'NSP5.2', 'VP1.2', 'VP2.2', 'V
 
 slog <- log10(sonm)
 #min value is determined by 
-min(slog[slog!=min(slog)])
+min(slog[slog != min(slog)])
 slog[which(!is.finite(slog))] <- 0
 slog[slog < 0] <- 0
 
 #Add the trimmed read counts per sample again
 slog <- rbind(slog, t(vd[,2]))
-
 
 #remove columns with only zero values - MAYBE NOT DO - ONLY REMOVES ONLY AU-1 VP6
 #s <- sonm[apply(sonm[,-1], 1, function(x) !all(x==0)),]
@@ -69,18 +71,14 @@ col_fun = colorRamp2(c(0, 200000, 400000, 600000, 800000, 1200000), c("white","b
 col_fun2 = colorRamp2(seq(min(slog), max(slog), length = 6), c("white","bisque2", "burlywood2", "coral1", "brown3", "brown4"), 
                       space = "RGB")
 
-
-
 #check the hexa codes of the colors you want
 brewer.pal(n = 8, name = "YlOrRd")
 col_fun3 = colorRamp2(seq(min(slog1), max(slog1), length = 8), c("#FFFFCC", "#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C" ,"#FC4E2A", "#E31A1C", "#B10026"))
-
 
 #rowOrder <- rownames(slog1)
 rowOrder <- c('VP7', 'VP4', 'VP6', 'VP1', 'VP2', 'VP3', 'NSP1', 'NSP2', 'NSP3', 'NSP4', 'NSP5',
                     'VP7.1', 'VP4.1', 'VP6.1', 'VP1.1', 'VP2.1', 'VP3.1', 'NSp1', 'NSp2', 'NSp3', 'NSp4', 'NSp5',
                     'VP7.2', 'VP4.2', 'VP6.2', 'VP1.2', 'VP2.2', 'VP3.2', 'NSP1.2', 'NSP2.2', 'NSP3.2', 'NSP4.2', 'NSP5.2')
-
 
 #Add qc reads as barplot for the column annotation
 col_ha <- HeatmapAnnotation(Total = anno_barplot(slog[34,]))
@@ -94,22 +92,17 @@ col_fun4 = colorRamp2(seq(min(slog1), max(slog1), length = 7), c("#FFFFCC", '#FC
 group1 <- c(rt, tb, au)
 rowSplit <- group1
 
-
 logAbundance=Heatmap(slog1, name='logAbundance', col = col_fun4, row_order = rowOrder, show_column_dend = F,
         row_names_gp = gpar(fontsize = 10), column_names_gp = gpar(fontsize = 10), column_names_rot = 60,
         top_annotation = col_ha, row_names_side = "left", border=T, row_split = rev(rowSplit))
 
 logAbundance
 
-
 # Add seperating lines between genotype constellations
 decorate_heatmap_body('logAbundance', {grid.lines(x=c(-0.2,0.99), y=c(0.33,0.33), gp = gpar(lty = 2, lwd = 2))})
 decorate_heatmap_body('logAbundance', {grid.lines(x=c(-0.2,0.99), y=c(0.665,0.665), gp = gpar(lty = 2, lwd = 2))})
 
 dev.off()
-
-
-
 
 #deneme for splitting
 slog1
@@ -119,18 +112,15 @@ slog13 = slog1[1:11,]
 
 ################
 
-
-
-
 ########## RVAB #########
-#son1 <- read.csv('~/Documents/PhD/RVAB/Abundance_RV/new_bbmap_RVAB_abundance.txt', sep = "\t")
-son1 <- read.csv('~/Documents/PhD/RVAB/Abundance_RV/new_bbmap_RVAB_abundance1.csv')
+#son1 <- read.csv('~/path/to/new_bbmap_RVAB_abundance.txt', sep = "\t")
+son1 <- read.csv('~/paht/to/new_bbmap_RVAB_abundance1.csv')
 son1 <- read.csv('RVAB_abundance.bwa_final.csv')
 
 rownames(son1) <- son1[,1]
 son1 <- son1[, c(-1)]
 
-d <- read_excel("~/Documents/PhD/Sample processing/NGS/RVAB_NGS1-2_readStats.xlsx", sheet=3)
+d <- read_excel("~/paht/to/RVAB_NGS1-2_readStats.xlsx", sheet = 3)
 son <- son1[,c(-1, -104)]  #removed the length column for now
 
 

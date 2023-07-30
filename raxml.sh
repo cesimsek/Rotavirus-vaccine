@@ -1,5 +1,6 @@
-######### RAxML-NG ML tree reconstruction
+#!/bin/bash
 
+# RAxML-NG ML tree reconstruction on HPC
 
 ### 1. Run jModelTest to estimate the nt substitution model
 
