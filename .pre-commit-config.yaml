@@ -1,0 +1,10 @@
+repos:
+# R
+- repo: https://github.com/lorenzwalthert/precommit
+  rev: v0.3.2
+  hooks:
+  - id: style-files  # styler
+  - id: lintr
+
+  # pip install pre-commit
+  # pre-commit install
